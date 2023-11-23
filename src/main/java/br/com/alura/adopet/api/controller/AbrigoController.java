@@ -4,7 +4,6 @@ import br.com.alura.adopet.api.dto.abrigo.CadastrarAbrigoDto;
 import br.com.alura.adopet.api.dto.abrigo.CadastrarPetAbrigoDto;
 import br.com.alura.adopet.api.model.Abrigo;
 import br.com.alura.adopet.api.model.Pet;
-import br.com.alura.adopet.api.repository.AbrigoRepository;
 import br.com.alura.adopet.api.service.AbrigoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +16,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/abrigos")
 public class AbrigoController {
-
-    @Autowired
-    private AbrigoRepository repository;
 
     @Autowired
     private AbrigoService abrigoService;
