@@ -21,16 +21,15 @@ public class AbrigoService {
     private AbrigoRepository abrigoRepository;
 
     public void cadastrar(CadastrarAbrigoDto dto) {
-        boolean nomeJaCadastrado = abrigoRepository.existsByNome(dto.nome());
-        boolean telefoneJaCadastrado = abrigoRepository.existsByTelefone(dto.telefone());
-        boolean emailJaCadastrado = abrigoRepository.existsByEmail(dto.email());
+        boolean abrigoJaCadastrado = abrigoRepository
+                .existsByEmailAndNomeAndTelefone(dto.email(), dto.nome(), dto.telefone());
 
         Abrigo abrigo = new Abrigo();
         abrigo.setNome(dto.nome());
         abrigo.setTelefone(dto.telefone());
         abrigo.setEmail(dto.email());
 
-        if (nomeJaCadastrado || telefoneJaCadastrado || emailJaCadastrado) {
+        if (abrigoJaCadastrado) {
             throw new ValidacaoException("Dados já cadastrados para outro abrigo!");
         } else {
             abrigoRepository.save(abrigo);
