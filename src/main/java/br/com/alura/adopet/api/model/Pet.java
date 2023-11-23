@@ -44,12 +44,12 @@ public class Pet {
     @Column(name = "adotado")
     private Boolean adotado;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference("abrigo_pets")
     @JoinColumn(name = "abrigo_id")
     private Abrigo abrigo;
 
-    @OneToOne(mappedBy = "pet")
+    @OneToOne(mappedBy = "pet", fetch = FetchType.LAZY)
     @JsonBackReference("adocao_pets")
     private Adocao adocao;
 
