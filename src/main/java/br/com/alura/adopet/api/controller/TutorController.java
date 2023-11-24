@@ -31,8 +31,12 @@ public class TutorController {
     @PutMapping(("/{nomeTutor}"))
     @Transactional
     public ResponseEntity<String> atualizar(@PathVariable String nomeTutor, @RequestBody @Valid AtualizarTutorDto dto) {
-        tutorService.atualizar(nomeTutor, dto);
-        return ResponseEntity.ok().build();
+        try {
+            tutorService.atualizar(nomeTutor, dto);
+            return ResponseEntity.ok().build();
+        }catch (ValidacaoException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

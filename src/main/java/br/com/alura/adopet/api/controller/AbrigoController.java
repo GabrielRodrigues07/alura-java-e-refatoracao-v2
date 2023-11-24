@@ -2,9 +2,9 @@ package br.com.alura.adopet.api.controller;
 
 import br.com.alura.adopet.api.dto.abrigo.CadastrarAbrigoDto;
 import br.com.alura.adopet.api.dto.abrigo.CadastrarPetAbrigoDto;
+import br.com.alura.adopet.api.dto.pet.PetDto;
 import br.com.alura.adopet.api.exception.ValidacaoException;
 import br.com.alura.adopet.api.model.Abrigo;
-import br.com.alura.adopet.api.model.Pet;
 import br.com.alura.adopet.api.service.AbrigoService;
 import br.com.alura.adopet.api.service.PetService;
 import jakarta.validation.Valid;
@@ -42,8 +42,12 @@ public class AbrigoController {
     }
 
     @GetMapping("/{idOuNome}/pets")
-    public ResponseEntity<List<Pet>> listarPets(@PathVariable String idOuNome) {
-        return ResponseEntity.ok(abrigoService.listarPets(idOuNome));
+    public ResponseEntity<List<PetDto>> listarPets(@PathVariable String idOuNome) {
+        try {
+            return ResponseEntity.ok(abrigoService.listarPets(idOuNome));
+        }catch (ValidacaoException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping("/{idOuNome}/pets")

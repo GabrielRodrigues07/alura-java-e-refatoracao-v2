@@ -1,9 +1,9 @@
 package br.com.alura.adopet.api.service;
 
 import br.com.alura.adopet.api.dto.abrigo.CadastrarAbrigoDto;
+import br.com.alura.adopet.api.dto.pet.PetDto;
 import br.com.alura.adopet.api.exception.ValidacaoException;
 import br.com.alura.adopet.api.model.Abrigo;
-import br.com.alura.adopet.api.model.Pet;
 import br.com.alura.adopet.api.repository.AbrigoRepository;
 import br.com.alura.adopet.api.repository.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +38,13 @@ public class AbrigoService {
         return abrigoRepository.findAll();
     }
 
-    public List<Pet> listarPets(String idOuNome) {
+    public List<PetDto> listarPets(String idOuNome) {
         Abrigo abrigo = carregarAbrigo(idOuNome);
 
-        return petRepository.findByAbrigo(abrigo);
+        return petRepository.findByAbrigo(abrigo)
+                .stream()
+                .map(PetDto::new)
+                .toList();
     }
 
     public Abrigo carregarAbrigo(String idOuNome) {

@@ -8,6 +8,8 @@ import br.com.alura.adopet.api.repository.TutorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 public class TutorService {
 
@@ -16,9 +18,13 @@ public class TutorService {
 
     public void atualizar(String nomeTutor, AtualizarTutorDto dto) {
         Tutor tutor = repository.findByNome(nomeTutor);
-        tutor.setTelefone(dto.telefone());
-        tutor.setEmail(dto.email());
-        repository.save(tutor);
+        if (Objects.nonNull(tutor)) {
+            tutor.setTelefone(dto.telefone());
+            tutor.setEmail(dto.email());
+            repository.save(tutor);
+        }else {
+            throw new ValidacaoException("Tutor não encontrado");
+        }
     }
 
     public void cadastrar(CadastrarTutorDto dto) {
