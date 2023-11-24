@@ -22,12 +22,9 @@ public class TutorService {
     }
 
     public void cadastrar(CadastrarTutorDto dto) {
-        boolean tutorCadastrado = repository.existsByEmailAndTelefone(dto.email(), dto.telefone());
+        boolean tutorCadastrado = repository.existsByEmailOrTelefone(dto.email(), dto.telefone());
 
-        Tutor tutor = new Tutor();
-        tutor.setNome(dto.nome());
-        tutor.setTelefone(dto.telefone());
-        tutor.setEmail(dto.email());
+        Tutor tutor = new Tutor(dto.nome(), dto.telefone(), dto.email());
 
         if (tutorCadastrado) {
             throw new ValidacaoException("Dados já cadastrados para outro tutor!");
